@@ -348,6 +348,14 @@
       overflow: hidden;
     }
 
+    .changelog_content {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
     .card_row {
       display: flex;
       justify-content: space-between;
@@ -912,31 +920,26 @@
 
     // 渲染更新日志
     function renderUpdateLog() {
-      if (!gameListEl || !analysisTitleEl || !analysisContentEl) return;
-      
+      if (!gameListEl) return;
+
       let htmlstr = '';
       updateLog.forEach((log, index) => {
-        const delay = index * 0.1;
+        const delay = index * 0.05;
         htmlstr += `
           <div class="game_card fade-in" style="animation-delay: ${delay}s">
+            <div class="card_header">
+              <div class="card_title_area">
+                <div class="card_name">${log.version}</div>
+                <div class="card_code" style="color: var(--text-muted);">${log.date}</div>
+              </div>
+            </div>
             <div class="card_body">
-              <div class="card_row">
-                <span class="card_label">版本</span>
-                <span class="card_value" style="color: var(--accent-gold)">${log.version}</span>
-              </div>
-              <div class="card_row">
-                <span class="card_label">日期</span>
-                <span class="card_value">${log.date}</span>
-              </div>
-              <div class="card_row">
-                <span class="card_label">内容</span>
-                <span class="card_value">${log.content}</span>
-              </div>
+              <div class="changelog_content">${log.content}</div>
             </div>
           </div>
         `;
       });
-      
+
       gameListEl.innerHTML = htmlstr;
     }
 
