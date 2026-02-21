@@ -1144,6 +1144,11 @@
       
       // 渲染初始内容
       renderMedalCards();
+
+      // 应用默认布局
+      if (isDanlie) {
+        gameListEl.classList.add('danlie');
+      }
     }
 
     // DOM加载完成后初始化
