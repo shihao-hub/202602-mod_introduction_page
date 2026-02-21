@@ -664,133 +664,92 @@
 
     // 物品数据（从 Lua 文件中提取）
     const medalData = [
-      {
-        id: 1,
-        name: '烹饪勋章',
-        code: 'cook_certificate',
-        extension: 'cooking_skill',
-        setting: '烹饪效率 +15%',
-        durability: 100,
-        theme: 'cooking',
-        themeName: '烹饪系',
-        colorIndex: 1,
-        obtain: '完成烹饪新手任务',
-        description: '这是烹饪系的基础勋章，佩戴后可以提升15%的烹饪速度，让玩家能够更快地制作食物。适合经常需要大量烹饪的玩家使用。'
-      },
-      {
-        id: 2,
-        name: '大厨勋章',
-        code: 'chef_certificate',
-        extension: 'master_cooking',
-        setting: '烹饪效率 +30% / 暴击率 +10%',
-        durability: 85,
-        theme: 'cooking',
-        themeName: '烹饪系',
-        colorIndex: 1,
-        obtain: '累计烹饪100次',
-        description: '烹饪系的进阶勋章，除了提升30%的烹饪效率外，还增加了10%的烹饪暴击率，有几率产出双倍食物。'
-      },
-      {
-        id: 3,
-        name: '主厨勋章',
-        code: 'headchef_certificate',
-        extension: 'grand_master',
-        setting: '烹饪效率 +50% / 暴击率 +25% / 解锁隐藏菜谱',
-        durability: 60,
-        theme: 'cooking',
-        themeName: '烹饪系',
-        colorIndex: 1,
-        obtain: '获得大厨勋章并完成主厨挑战',
-        description: '烹饪系的终极勋章，大幅提升烹饪效率，并且可以解锁隐藏的特殊菜谱，是每个美食家的终极追求。'
-      },
-      {
-        id: 4,
-        name: '战士勋章',
-        code: 'warrior_certificate',
-        extension: 'combat_boost',
-        setting: '攻击力 +20%',
-        durability: 100,
-        theme: 'combat',
-        themeName: '战斗系',
-        colorIndex: 3,
-        obtain: '击败10个boss级怪物',
-        description: '战斗系的基础勋章，提升20%的攻击力，让玩家在战斗中更具优势。'
-      },
-      {
-        id: 5,
-        name: '狂战士勋章',
-        code: 'berserker_certificate',
-        extension: 'rage_mode',
-        setting: '攻击力 +40% / 攻击速度 +15%',
-        durability: 70,
-        theme: 'combat',
-        themeName: '战斗系',
-        colorIndex: 3,
-        obtain: '累计造成100000点伤害',
-        description: '战斗系的进阶勋章，大幅提升攻击力和攻击速度，适合喜欢正面战斗的玩家。'
-      },
-      {
-        id: 6,
-        name: '生存者勋章',
-        code: 'survivor_certificate',
-        extension: 'survival_instinct',
-        setting: '饥饿消耗 -20% / 生命恢复 +5/s',
-        durability: 100,
-        theme: 'survival',
-        themeName: '生存系',
-        colorIndex: 2,
-        obtain: '存活超过100天',
-        description: '生存系的基础勋章，降低饥饿消耗并提升生命恢复速度，非常适合长期生存的玩家。'
-      },
-      {
-        id: 7,
-        name: '建筑师勋章',
-        code: 'builder_certificate',
-        extension: 'construction_boost',
-        setting: '建造速度 +30% / 材料消耗 -10%',
-        durability: 90,
-        theme: 'building',
-        themeName: '建造系',
-        colorIndex: 4,
-        obtain: '放置500个建筑',
-        description: '建造系勋章，提升建造速度并降低材料消耗，是基地建设爱好者的必备品。'
-      },
-      {
-        id: 8,
-        name: '法师勋章',
-        code: 'mage_certificate',
-        extension: 'magic_power',
-        setting: '魔法伤害 +25% / 法力恢复 +10/s',
-        durability: 75,
-        theme: 'magic',
-        themeName: '魔法系',
-        colorIndex: 4,
-        obtain: '使用魔法物品100次',
-        description: '魔法系勋章，提升魔法伤害和法力恢复速度，适合喜欢使用魔法道具的玩家。'
-      }
+      // 袋子类
+      { id: 1, name: '保鲜袋', code: 'mone_storage_bag', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '4格，永久保鲜，只能存放允许放入冰箱的物品', features: ['4格容量', '永久保鲜', '仅限冰箱物品'] },
+      { id: 2, name: '材料袋', code: 'mone_candybag', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '可随身携带，可以存放草、树枝、燧石、石头、金块、木头', features: ['可随身携带', '存放基础材料'] },
+      { id: 3, name: '工具袋', code: 'mone_tool_bag', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '可随身携带，只允许存放有 tool 等标签的物品', features: ['可随身携带', '存放工具'] },
+      { id: 4, name: '小食物袋', code: 'mone_spicepack', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '可随身携带，可以存放任何有新鲜度的物品，可以保鲜，厨师袋的保鲜效果', features: ['可随身携带', '保鲜食物'] },
+      { id: 5, name: '食物袋', code: 'mone_icepack', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '可随身携带，可以存放任何有新鲜度的物品，可以保鲜，默认是盐盒的保鲜效果', features: ['可随身携带', '盐盒保鲜效果'] },
+      { id: 6, name: '装备袋', code: 'mone_backpack', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '可随身携带，允许存放可被装备的物品', features: ['可随身携带', '存放装备'] },
+      { id: 7, name: '收纳袋', code: 'mone_piggyback', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '40格容量，可随身携带', features: ['40格容量', '可随身携带'] },
+      { id: 8, name: '海上麻袋', code: 'mone_seasack', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '14格，隔热120秒', features: ['14格容量', '隔热120秒'] },
+      { id: 9, name: '妈妈放心种子袋', code: 'mone_seedpouch', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '14格、种子永鲜、80%防雨', features: ['14格容量', '种子永鲜', '80%防雨'] },
+      { id: 10, name: '猪猪袋', code: 'mone_piggybag', theme: 'bag', themeName: '袋子类', colorIndex: 1, description: '九格、可以存放部分容器和部分其他物品', features: ['9格容量', '存放容器'] },
+      // 武器类
+      { id: 11, name: '毒矛', code: 'mone_spear_poison', theme: 'weapon', themeName: '武器类', colorIndex: 3, description: '可以对目标周围造成1.5格范围伤害，固定为25点伤害', features: ['1.5格范围伤害', '固定25点伤害'] },
+      { id: 12, name: '升级版·回旋镖', code: 'mone_boomerang', theme: 'weapon', themeName: '武器类', colorIndex: 3, description: '伤害34、自动接、无耐久，攻击到目标后会在目标周围弹来弹去，真实伤害', features: ['34点伤害', '自动接取', '无耐久', '真实伤害'] },
+      { id: 13, name: '腐化火腿棒', code: 'mone_hambat', theme: 'weapon', themeName: '武器类', colorIndex: 3, description: '属性同火腿棒，但是反过来的，越腐烂伤害越高', features: ['越腐烂伤害越高'] },
+      { id: 14, name: '单身狗', code: 'mone_single_dog', theme: 'weapon', themeName: '武器类', colorIndex: 3, description: '周期探测一定半径内的狗子，秒杀，补充秒杀目标：水晶冠秃鹫', features: ['秒杀狗子', '秒杀水晶冠秃鹫'] },
+      { id: 15, name: '多功能·戟', code: 'mone_halberd', theme: 'weapon', themeName: '武器类', colorIndex: 3, description: '砍树的时候自动出树根！斧头+镐头+锤子(2.5倍效果)，伤害设置成了14点', features: ['自动出树根', '多功能工具', '14点伤害'] },
+      // 建筑类
+      { id: 16, name: '豪华箱子', code: 'mone_treasurechest', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '16格或25格或36格，在模组配置里可以修改，可以使用弹性空间制造器升级', features: ['可配置格数', '可升级'] },
+      { id: 17, name: '豪华冰箱', code: 'mone_icebox', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '16格或25格或36格，在模组配置里可以修改，可以使用弹性空间制造器升级', features: ['可配置格数', '可升级'] },
+      { id: 18, name: '豪华盐箱', code: 'mone_saltbox', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '16格或25格或36格，在模组配置里可以修改，可以使用弹性空间制造器升级', features: ['可配置格数', '可升级'] },
+      { id: 19, name: '豪华龙鳞宝箱', code: 'mone_dragonflychest', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '16格或25格或36格，在模组配置里可以修改，可以使用弹性空间制造器升级', features: ['可配置格数', '可升级'] },
+      { id: 20, name: '海上箱子·便携', code: 'mone_waterchest_inv', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '120格、不可燃、只允许被玩家摧毁、可随身携带', features: ['120格容量', '不可燃', '仅玩家可摧毁'] },
+      { id: 21, name: '杂务箱', code: 'mone_skull_chest', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '25格容器，可以存放杂物，装备袋。杂物的定义是：不常用，但是放箱子里又觉得占空间', features: ['25格容量', '存放杂物'] },
+      { id: 22, name: '路灯', code: 'mone_city_lamp', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '范围1.5格地皮照明', features: ['1.5格照明范围'] },
+      { id: 23, name: '树木栽培家', code: 'mone_arborist', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '放入树种，会在半径2.5格地皮内圆形种植树木，每5秒会灭一次半径3.5格地皮内的焖烧/火焰', features: ['自动种植', '自动灭火'] },
+      { id: 24, name: '大蒜·建筑', code: 'mone_garlic_structure', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '蝙蝠靠近1秒内被熏死', features: ['熏死蝙蝠'] },
+      { id: 25, name: '沙坑', code: 'mie_sand_pit', theme: 'building', themeName: '建筑类', colorIndex: 2, description: '用铲子可以摧毁，等价于半自动的物品转移功能，但是占地面积小', features: ['半自动物品转移'] },
+      // 装备类
+      { id: 26, name: '小草帽', code: 'mone_pith', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '耐久度等于草甲，但防御度为70%', features: ['草甲耐久', '70%防御'] },
+      { id: 27, name: '铁甲', code: 'mone_armor_metalplate', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '不减移速，勉强可以作为大理石甲的替代品', features: ['不减移速'] },
+      { id: 28, name: '智慧帽', code: 'mone_brainjelly', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '四季控温，春秋30度，夏10度，冬60度', features: ['四季控温'] },
+      { id: 29, name: '双层伞帽', code: 'mone_double_umbrella', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '70%防雨，隔热效果为眼球伞的2倍', features: ['70%防雨', '2倍隔热'] },
+      { id: 30, name: '素石', code: 'mone_pheromonestone', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '使装备无耐久(新鲜度、燃料、使用次数、护甲)', features: ['装备无耐久'] },
+      { id: 31, name: '燃气帽', code: 'mone_gashat', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '低理智时高防御和高攻击，1-0.8，80%防御1倍攻击。0.8-0.55，85%防御1.15倍攻击', features: ['低理智加成'] },
+      { id: 32, name: '暗夜空间斗篷', code: 'mone_nightspace_cape', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '24格或14格容量，在模组配置里可以修改。类似骨甲、穿戴者可以在水上行走，冬季保暖180，夏季隔热180', features: ['容器', '水上行走', '温控'] },
+      { id: 33, name: '升级版·眼面具', code: 'mone_eyemaskhat', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '耐久增加，防御力增加，位面防御20，可以成组喂食，耐久为0不消失但失去效果', features: ['位面防御20', '成组喂食'] },
+      { id: 34, name: '升级版·恐怖盾牌', code: 'mone_shieldofterror', theme: 'equipment', themeName: '装备类', colorIndex: 4, description: '盾反，耐久增加，防御力增加，位面伤害20，位面防御20，可以成组喂食，耐久为0不消失但失去效果', features: ['盾反', '位面伤害/防御20'] },
+      // 工具类
+      { id: 35, name: '收割者的砍刀', code: 'mone_harvester_staff', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '快速采集但采集降饥饿度，增加5%移速', features: ['快速采集', '+5%移速'] },
+      { id: 36, name: '收割者的黄金砍刀', code: 'mone_harvester_staff_gold', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '快速采集但采集降饥饿度，增加10%移速', features: ['快速采集', '+10%移速'] },
+      { id: 37, name: '临时加速手杖', code: 'mone_walking_stick', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '手持增加100%的移动速度，但有耐久。耐久大概是火把的三倍', features: ['+100%移速', '有耐久'] },
+      { id: 38, name: '升级版·懒人魔杖', code: 'mone_orangestaff', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '增加25%的移动速度，装备者拥有快速采集的能力，无消耗、无耐久，但有五秒冷却时间', features: ['+25%移速', '快速采集', '5秒冷却'] },
+      { id: 39, name: '升级版·牛铃', code: 'mone_beef_bell', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '不乱跑 | 防击飞 | 只能被强制攻击，不会生成便便 | 不触发陷阱 | 有训诫值不会发情', features: ['牛不乱跑', '防击飞'] },
+      { id: 40, name: '升级版·挖洞兔号角', code: 'mone_rabbitkinghorn', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '等同于挖洞兔号角，但是无耐久', features: ['无耐久'] },
+      { id: 41, name: '升级版·晾肉架', code: 'mone_meatrack', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '同一点位种植，配方便宜', features: ['同一点位种植'] },
+      { id: 42, name: '升级版·耕地机', code: 'mone_farm_plow_item', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '一次挖九个坑，部署时附近的农田杂物会被删除，工作完毕会自动归还给它的部署者（5格地皮内）', features: ['一次挖9坑', '自动归还'] },
+      { id: 43, name: '渔网', code: 'mone_fishingnet', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '科雷的废稿，渔网，捕鱼用的。鱼越重，消耗的耐久越高！', features: ['捕鱼'] },
+      { id: 44, name: '升级版·蝙蝠棒', code: 'mone_batbat', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '', features: [] },
+      { id: 45, name: '升级版·晨星锤', code: 'mone_nightstick', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '', features: [] },
+      { id: 46, name: '升级版·三尾猫鞭', code: 'mone_whip', theme: 'tool', themeName: '工具类', colorIndex: 0, description: '', features: [] },
+      // 食物类
+      { id: 47, name: '惠灵顿风干牛排', code: 'mone_beef_wellington', theme: 'food', themeName: '食物类', colorIndex: 1, description: '肉食，半天内增加2.5倍伤害，使用者添加50点位面伤害值，20点位面防御，一次制作四个', features: ['2.5倍伤害', '位面伤害/防御', '一次制作4个'] },
+      { id: 48, name: '馊鸡汤', code: 'mone_chicken_soup', theme: 'food', themeName: '食物类', colorIndex: 1, description: '肉食，有10%的概率回满三维（一次制作五个）', features: ['10%回满三维', '一次制作5个'] },
+      { id: 49, name: '蜜汁大肉棒', code: 'mone_honey_ham_stick', theme: 'food', themeName: '食物类', colorIndex: 1, description: '一天内效率提高两倍，时间可累加(一次制作五个)，击杀Boss的时候有20%概率触发双倍掉落效果', features: ['效率2倍', '20%双倍掉落'] },
+      { id: 50, name: '超级鳄梨酱', code: 'mone_guacamole', theme: 'food', themeName: '食物类', colorIndex: 1, description: '夜视半天，无视沙尘暴，时间不可叠加(一次制作五个)', features: ['夜视', '无视沙尘暴'] },
+      { id: 51, name: '格罗姆拉肚子奶昔', code: 'mone_glommer_poop_food', theme: 'food', themeName: '食物类', colorIndex: 1, description: '让格罗姆立刻拉一次粑粑', features: ['格罗姆拉粑粑'] },
+      // 其他
+      { id: 52, name: '灯笼', code: 'mone_redlantern', theme: 'other', themeName: '其他', colorIndex: 2, description: '类似提灯但是丢地上不消耗耐久，猴子和坎普斯都不会偷', features: ['地上不消耗耐久', '防偷'] },
+      { id: 53, name: '你的装备柜', code: 'mone_wardrobe', theme: 'other', themeName: '其他', colorIndex: 2, description: '36格，存放你的装备。不只是装备，类似排箫这种现在也能放进去了', features: ['36格容量'] },
+      { id: 54, name: '小书架', code: 'mone_bookstation', theme: 'other', themeName: '其他', colorIndex: 2, description: '可以随身携带小书架，不提供科学引擎的效果、薇克巴顿靠近回复速度并不会加倍', features: ['可随身携带'] },
+      { id: 55, name: '薇格弗德歌谣盒', code: 'mone_wathgrithr_box', theme: 'other', themeName: '其他', colorIndex: 2, description: '8格，存放女武神的歌谣', features: ['8格容量', '存放歌谣'] },
+      { id: 56, name: '旺达钟表盒', code: 'mone_wanda_box', theme: 'other', themeName: '其他', colorIndex: 2, description: '存放旺达的钟表(死亡时，容器内的第二次机会表会掉落！)', features: ['存放钟表'] },
+      { id: 57, name: '毒药膏', code: 'mone_poisonblam', theme: 'other', themeName: '其他', colorIndex: 2, description: '使有新鲜度的物品瞬间腐烂', features: ['瞬间腐烂'] },
+      { id: 58, name: '腐化炉', code: 'mone_chiminea', theme: 'other', themeName: '其他', colorIndex: 2, description: '放入其中的有新鲜度的物品会慢慢腐烂', features: ['慢慢腐烂'] },
+      { id: 59, name: '生命水球', code: 'mone_waterballoon', theme: 'other', themeName: '其他', colorIndex: 2, description: '一次制作六个，一次可以让最多80颗树种发芽，一次可以让范围内所有树苗长到第一阶段，一次可以让范围内所有树木直接长到最高阶段', features: ['催熟树种', '催熟树苗', '催熟树木'] },
+      { id: 60, name: '皮痒傀儡', code: 'mone_dummytarget', theme: 'other', themeName: '其他', colorIndex: 2, description: '每2秒嘲讽一次半径4格内非友军生物。受到攻击会反伤，反伤值为50点', features: ['嘲讽', '反伤50'] },
     ];
 
     // 更新日志数据
     const updateLog = [
-      { version: '2.5.0', date: '2024-01-15', content: '新增主厨勋章，解锁隐藏菜谱功能' },
-      { version: '2.4.0', date: '2023-12-20', content: '优化勋章获取条件，降低部分勋章难度' },
-      { version: '2.3.0', date: '2023-11-10', content: '新增建造系和魔法系勋章' },
-      { version: '2.2.0', date: '2023-10-05', content: '修复勋章耐久度显示异常问题' },
-      { version: '2.1.0', date: '2023-09-01', content: '新增战斗系勋章，平衡调整' }
+      { version: '1.0.0', date: '2023-01-01', content: '更多物品模组初始版本' }
     ];
 
     // 常见问题数据
     const qaData = [
-      { q: '勋章耐久度用完了怎么办？', a: '勋章耐久度耗尽后，可以使用修复工具进行修复，或者等待自然恢复（每天恢复5%）。' },
-      { q: '可以同时佩戴多个勋章吗？', a: '可以同时佩戴最多3个不同系列的勋章，相同系列的勋章效果不叠加。' },
-      { q: '如何快速获取勋章？', a: '建议先完成新手任务获取基础勋章，然后通过日常活动积累进度，逐步解锁更高级的勋章。' }
+      { q: '如何获取这些物品？', a: '这些物品是"更多物品"模组中新增的内容，可以通过科学机器或炼金引擎解锁制作配方。' },
+      { q: '物品特性如何生效？', a: '每个物品都有独特的功能特性，具体请点击物品卡片查看详细说明。' },
+      { q: '如何筛选特定类别的物品？', a: '使用顶部的分类按钮可以按袋子类、武器类、建筑类、装备类、食物类、工具类、其他来筛选物品。' }
     ];
 
     // 作者留言
-    const authorMessage = '感谢大家使用能力勋章模组！这个模组是我用心制作的作品，希望能给大家的游戏体验带来更多乐趣。如果有任何问题或建议，欢迎在模组页面留言反馈。祝大家游戏愉快！—— 恒子';
+    const authorMessage = '欢迎使用更多物品模组介绍页！这个模组为饥荒联机版添加了大量实用的物品，包括各种容器、工具、武器和装备。希望能给大家的游戏体验带来更多乐趣。如有问题或建议，欢迎反馈。—— 作者';
 
     // 模组说明
-    const modExplain = '能力勋章是一个为饥荒联机版设计的功能性模组，玩家可以通过完成特定任务来获取各种勋章。每个勋章都拥有独特的属性加成，合理搭配勋章可以让你的生存之旅更加轻松。';
+    const modExplain = '"更多物品"是一个为饥荒联机版设计的功能性模组，添加了大量实用的物品和容器。每个物品都拥有独特的功能特性，合理使用这些物品可以让你的生存之旅更加轻松。';
 
     // DOM元素引用
     let gameListEl = null;
@@ -831,81 +790,76 @@
     // 获取图标SVG
     function getIconSvg(theme) {
       const icons = {
-        cooking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/></svg>',
-        combat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>',
-        survival: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-        magic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
-        building: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>'
+        bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v20h12V6h-4V2H6z"/><path d="M10 2v4"/><path d="M14 9v8"/><path d="M10 9v8"/></svg>',
+        weapon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>',
+        building: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
+        equipment: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+        food: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>',
+        tool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+        other: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
       };
-      return icons[theme] || icons.cooking;
+      return icons[theme] || icons.other;
     }
 
-    // 渲染勋章卡片
+    // 渲染物品卡片
     function renderMedalCards() {
       if (!gameListEl) return;
-      
+
       let filteredData = medalData;
-      
+
       // 筛选主题
       if (currentTheme) {
         filteredData = filteredData.filter(m => m.theme === currentTheme);
       }
-      
+
       // 筛选风格（根据颜色）
       if (currentStyle !== null && colorStyleList[currentStyle]) {
         // 这里可以添加风格筛选逻辑
       }
-      
+
       let htmlstr = '';
-      
+
       if (filteredData.length === 0) {
         htmlstr = '<div class="loading_box"><div class="loading">暂无数据</div></div>';
       } else {
-        filteredData.forEach((medal, index) => {
-          const color = colorStyleList[medal.colorIndex] ? colorStyleList[medal.colorIndex].color : '#c9a227';
-          const delay = index * 0.1;
-          
+        filteredData.forEach((item, index) => {
+          const color = colorStyleList[item.colorIndex] ? colorStyleList[item.colorIndex].color : '#c9a227';
+          const delay = index * 0.05;
+          const shortDesc = item.description.length > 40 ? item.description.substring(0, 40) + '...' : item.description;
+
           htmlstr += `
-            <div class="game_card fade-in" style="--card-accent: ${color}; animation-delay: ${delay}s" data-id="${medal.id}">
+            <div class="game_card fade-in" style="--card-accent: ${color}; animation-delay: ${delay}s" data-id="${item.id}">
               <div class="card_header">
                 <div class="card_icon" style="--card-accent: ${color}">
-                  ${getIconSvg(medal.theme)}
+                  ${getIconSvg(item.theme)}
                 </div>
                 <div class="card_title_area">
-                  <div class="card_name">${medal.name}</div>
-                  <div class="card_code">${medal.code}</div>
+                  <div class="card_name">${item.name}</div>
+                  <div class="card_code">${item.code}</div>
                 </div>
               </div>
               <div class="card_body">
                 <div class="card_row">
-                  <span class="card_label">扩展</span>
-                  <span class="card_value">${medal.extension}</span>
+                  <span class="card_label">描述</span>
+                  <span class="card_value">${shortDesc}</span>
                 </div>
+                ${item.features && item.features.length > 0 ? `
                 <div class="card_row">
-                  <span class="card_label">设定</span>
-                  <span class="card_value">${medal.setting}</span>
+                  <span class="card_label">特性</span>
+                  <span class="card_value">${item.features.slice(0, 2).join('、')}</span>
                 </div>
-                <div class="card_row">
-                  <span class="card_label">获取</span>
-                  <span class="card_value">${medal.obtain}</span>
-                </div>
+                ` : ''}
               </div>
               <div class="card_footer">
-                <span class="card_theme">${medal.themeName}</span>
-                <div class="card_durability">
-                  <div class="durability_bar">
-                    <div class="durability_fill" style="width: ${medal.durability}%"></div>
-                  </div>
-                  <span class="durability_text">${medal.durability}%</span>
-                </div>
+                <span class="card_theme">${item.themeName}</span>
               </div>
             </div>
           `;
         });
       }
-      
+
       gameListEl.innerHTML = htmlstr;
-      
+
       // 添加卡片点击事件
       document.querySelectorAll('.game_card').forEach(card => {
         card.addEventListener('click', () => {
@@ -915,43 +869,42 @@
       });
     }
 
-    // 显示勋章详情
+    // 显示物品详情
     function showMedalDetail(id) {
-      const medal = medalData.find(m => m.id === id);
-      if (!medal || !analysisTitleEl || !analysisContentEl || !analysisBoxEl) return;
-      
-      const color = colorStyleList[medal.colorIndex] ? colorStyleList[medal.colorIndex].color : '#c9a227';
-      
-      analysisTitleEl.textContent = medal.name;
+      const item = medalData.find(m => m.id === id);
+      if (!item || !analysisTitleEl || !analysisContentEl || !analysisBoxEl) return;
+
+      const color = colorStyleList[item.colorIndex] ? colorStyleList[item.colorIndex].color : '#c9a227';
+
+      analysisTitleEl.textContent = item.name;
       analysisTitleEl.style.color = color;
-      
+
+      let featuresHtml = '';
+      if (item.features && item.features.length > 0) {
+        featuresHtml = item.features.map(f => `<li>${f}</li>`).join('');
+      }
+
       analysisContentEl.innerHTML = `
         <div class="analysis_row">
           <span class="analysis_label">代码</span>
-          <span class="analysis_value" style="color: ${color}">${medal.code}</span>
+          <span class="analysis_value" style="color: ${color}">${item.code}</span>
         </div>
         <div class="analysis_row">
-          <span class="analysis_label">扩展</span>
-          <span class="analysis_value">${medal.extension}</span>
+          <span class="analysis_label">分类</span>
+          <span class="analysis_value">${item.themeName}</span>
         </div>
-        <div class="analysis_row">
-          <span class="analysis_label">设定</span>
-          <span class="analysis_value">${medal.setting}</span>
+        ${featuresHtml ? `
+        <div class="shuoming">
+          <div class="shuoming_title">特性</div>
+          <ul class="shuoming_content" style="margin: 0; padding-left: 20px;">${featuresHtml}</ul>
         </div>
-        <div class="analysis_row">
-          <span class="analysis_label">耐久</span>
-          <span class="analysis_value">${medal.durability}%</span>
-        </div>
-        <div class="analysis_row">
-          <span class="analysis_label">获取方式</span>
-          <span class="analysis_value">${medal.obtain}</span>
-        </div>
+        ` : ''}
         <div class="shuoming">
           <div class="shuoming_title">详细说明</div>
-          <div class="shuoming_content">${medal.description}</div>
+          <div class="shuoming_content">${item.description}</div>
         </div>
       `;
-      
+
       analysisBoxEl.classList.add('show');
     }
 
