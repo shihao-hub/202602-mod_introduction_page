@@ -1,0 +1,20 @@
+{
+  "themes": [
+    { "value": "bag", "name": "袋子类" },
+    { "value": "weapon", "name": "武器类" },
+    { "value": "building", "name": "建筑类" },
+    { "value": "equipment", "name": "装备类" },
+    { "value": "food", "name": "食物类" },
+    { "value": "tool", "name": "工具类" },
+    { "value": "other", "name": "其他" }
+  ],
+  "colors": [
+    { "name": "默认金", "color": "#c9a227" },
+    { "name": "翡翠绿", "color": "#4a9c6d" },
+    { "name": "深海蓝", "color": "#4a7c9c" },
+    { "name": "烈焰红", "color": "#9c4a4a" },
+    { "name": "神秘紫", "color": "#7c4a9c" }
+  ],
+  "authorMessage": "感谢大家使用更多物品模组！这个模组是我用心制作的作品，希望能给大家的游戏体验带来更多乐趣。如果有任何问题或建议，欢迎在模组页面留言反馈。祝大家游戏愉快！",
+  "modExplain": "更多物品是一个为饥荒联机版设计的功能性模组。"
+}
