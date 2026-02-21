@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="description" content="饥荒联机版《能力勋章》官方介绍页，最新最全的内容都在这里~" />
+  <meta name="keywords" content="能力勋章,能力勋章介绍页,恒子,饥荒联机版能力勋章,functional medal,勋章" />
+  <title>能力勋章介绍页</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1a1a1a;
+      --bg-card: #2a2a2a;
+      --bg-card-hover: #353535;
+      --border-color: #4a4a4a;
+      --text-primary: #e8e8e8;
+      --text-secondary: #b8b8b8;
+      --text-muted: #888;
+      --accent-gold: #c9a227;
+      --accent-gold-light: #e8c547;
+      --accent-green: #4a9c6d;
+      --accent-blue: #4a7c9c;
+      --accent-red: #9c4a4a;
+      --accent-purple: #7c4a9c;
+      --shadow-color: rgba(0,0,0,0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* 背景纹理 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(201, 162, 39, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(74, 156, 109, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 顶部标题区 */
+    #toptitle {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
+      border-bottom: 2px solid var(--accent-gold);
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .page_title {
+      display: block;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 16px;
+      letter-spacing: 4px;
+    }
+
+    /* 搜索框 */
+    #searchbox_waikuang {
+      max-width: 400px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+
+    #searchbox {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #searchbox:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.2);
+    }
+
+    #searchbox::placeholder {
+      color: var(--text-muted);
+    }
+
+    #searchbox_waikuang::before {
+      content: '⌕';
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    /* 导航按钮 */
+    .navigation_box {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .navigation_button {
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .navigation_button:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-gold);
+      color: var(--text-primary);
+    }
+
+    .navigation_button.xuanzhong {
+      background: linear-gradient(180deg, var(--accent-gold) 0%, #a88520 100%);
+      border-color: var(--accent-gold-light);
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    /* 筛选区 */
+    .screen_box {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .screen_title {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .screen_button {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+      min-width: 80px;
+      transition: all 0.2s ease;
+    }
+
+    .screen_button:hover,
+    .screen_button:focus {
+      border-color: var(--accent-gold);
+    }
+
+    /* 小功能按钮 */
+    .smallbutton {
+      position: fixed;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .smallbutton:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: scale(1.05);
+    }
+
+    #changescreen {
+      top: 160px;
+    }
+
+    #morebutton {
+      top: 210px;
+    }
+
+    #rewardbutton {
+      top: 260px;
+    }
+
+    #helpbutton {
+      top: 310px;
+    }
+
+    /* 内容列表 */
+    #game_list {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      min-height: 400px;
+    }
+
+    #game_list.danlie {
+      grid-template-columns: 1fr;
+      max-width: 800px;
+    }
+
+    /* 加载动画 */
+    .loading_box {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+    }
+
+    .loading {
+      font-size: 16px;
+      color: var(--text-muted);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* 卡片样式 */
+    .game_card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .game_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--card-accent, var(--accent-gold)), transparent);
+    }
+
+    .game_card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .card_header {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--border-color);
+      gap: 12px;
+    }
+
+    .card_icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+      border: 2px solid var(--card-accent, var(--accent-gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .card_icon::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--card-accent, var(--accent-gold));
+      opacity: 0.3;
+      animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.1); opacity: 0.5; }
+    }
+
+    .card_icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--card-accent, var(--accent-gold));
+    }
+
+    .card_title_area {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card_name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .card_code {
+      font-size: 12px;
+      color: var(--card-accent, var(--accent-gold));
+      font-family: monospace;
+    }
+
+    .card_body {
+      padding: 16px;
+    }
+
+    .card_row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.05);
+    }
+
+    .card_row:last-child {
+      border-bottom: none;
+    }
+
+    .card_label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .card_value {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: right;
+      max-width: 60%;
+    }
+
+    .card_footer {
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card_theme {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      color: var(--text-muted);
+    }
+
+    .card_durability {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .durability_bar {
+      width: 60px;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .durability_fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), #6bc98e);
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    .durability_text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* 解析弹窗 */
+    .analysis_box {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .analysis_box.show {
+      display: flex;
+    }
+
+    #analysis_bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+    }
+
+    #close_tip {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    #analysis_info {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--accent-gold);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .analysis_header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+    }
+
+    .analysis_title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent-gold-light);
+      text-align: center;
+    }
+
+    .analysis_content {
+      padding: 20px;
+    }
+
+    .analysis_row {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .analysis_row:last-child {
+      border-bottom: none;
+    }
+
+    .analysis_label {
+      width: 80px;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .analysis_value {
+      flex: 1;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .shuoming {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 6px;
+    }
+
+    .shuoming_title {
+      font-size: 14px;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .shuoming_content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* 页脚 */
+    #foot {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-dark);
+    }
+
+    #foot a {
+      color: var(--accent-gold);
+      text-decoration: none;
+    }
+
+    /* 入场动画 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .page_title {
+        font-size: 22px;
+        letter-spacing: 2px;
+      }
+
+      .navigation_box {
+        gap: 6px;
+      }
+
+      .navigation_button {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
+      .screen_box {
+        gap: 8px;
+      }
+
+      #game_list {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .smallbutton {
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+
+      #changescreen { top: 140px; }
+      #morebutton { top: 182px; }
+      #rewardbutton { top: 224px; }
+      #helpbutton { top: 266px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gold);
+    }
+  </style>
+</head>
+<body>
+  <div id="toptitle">
+    <label class="page_title">能力勋章介绍页</label>
+    <div id="searchbox_waikuang">
+      <input type="search" placeholder="请输入您要搜索的关键字" id="searchbox">
+    </div>
+    <div class="navigation_box">
+      <label class="navigation_button xuanzhong" data-tab="item">道具介绍</label>
+      <label class="navigation_button" data-tab="explain">模组说明</label>
+      <label class="navigation_button" data-tab="qa">常见问题</label>
+      <label class="navigation_button" data-tab="update">更新日志</label>
+      <label class="navigation_button" data-tab="author">作者留言</label>
+    </div>
+    <div class="screen_box">
+      <label class="screen_title">主题:</label>
+      <select class="screen_button" id="game_theme">
+        <option value="">全部</option>
+      </select>
+      <label class="screen_title">模式:</label>
+      <select class="screen_button" id="game_level">
+        <option value="default">默认</option>
+        <option value="easy">简易</option>
+      </select>
+      <label class="screen_title">风格:</label>
+      <select class="screen_button" id="game_style"></select>
+    </div>
+  </div>
+
+  <!-- 小功能按钮 -->
+  <div id="changescreen" class="smallbutton" title="改变布局">
+    <span class="duolie">☷</span>
+  </div>
+  <div id="morebutton" class="smallbutton" title="更多模组">…</div>
+  <div id="rewardbutton" class="smallbutton" title="打赏作者">￥</div>
+  <div id="helpbutton" class="smallbutton" title="介绍页使用说明书">?</div>
+
+  <div id="game_list">
+    <div class="loading_box">
+      <div class="loading">页面加载中…</div>
+    </div>
+  </div>
+
+  <!-- 解析弹窗 -->
+  <div class="analysis_box" id="analysisBox">
+    <div id="analysis_bg"></div>
+    <div id="close_tip">点击任意空白区域关闭</div>
+    <div id="analysis_info">
+      <div class="analysis_header">
+        <div class="analysis_title" id="analysisTitle">勋章详情</div>
+      </div>
+      <div class="analysis_content" id="analysisContent"></div>
+    </div>
+  </div>
+
+  <div id="foot">
+    Copyright © 2019 by Hengzi. All Rights Reserved.<br>
+    <a id="beian" target="_blank" href="https://beian.miit.gov.cn">浙ICP备17032705号-1</a>
+  </div>
+
+  <script>
+    // 主题分类数据
+    const themeList = [
+      { theme_value: 'cooking', theme_name: '烹饪系' },
+      { theme_value: 'combat', theme_name: '战斗系' },
+      { theme_value: 'survival', theme_name: '生存系' },
+      { theme_value: 'magic', theme_name: '魔法系' },
+      { theme_value: 'building', theme_name: '建造系' }
+    ];
+
+    // 颜色风格数据
+    const colorStyleList = [
+      { name: '默认金', color: '#c9a227' },
+      { name: '翡翠绿', color: '#4a9c6d' },
+      { name: '深海蓝', color: '#4a7c9c' },
+      { name: '烈焰红', color: '#9c4a4a' },
+      { name: '神秘紫', color: '#7c4a9c' }
+    ];
+
+    // 勋章数据
+    const medalData = [
+      {
+        id: 1,
+        name: '烹饪勋章',
+        code: 'cook_certificate',
+        extension: 'cooking_skill',
+        setting: '烹饪效率 +15%',
+        durability: 100,
+        theme: 'cooking',
+        themeName: '烹饪系',
+        colorIndex: 1,
+        obtain: '完成烹饪新手任务',
+        description: '这是烹饪系的基础勋章，佩戴后可以提升15%的烹饪速度，让玩家能够更快地制作食物。适合经常需要大量烹饪的玩家使用。'
+      },
+      {
+        id: 2,
+        name: '大厨勋章',
+        code: 'chef_certificate',
+        extension: 'master_cooking',
+        setting: '烹饪效率 +30% / 暴击率 +10%',
+        durability: 85,
+        theme: 'cooking',
+        themeName: '烹饪系',
+        colorIndex: 1,
+        obtain: '累计烹饪100次',
+        description: '烹饪系的进阶勋章，除了提升30%的烹饪效率外，还增加了10%的烹饪暴击率，有几率产出双倍食物。'
+      },
+      {
+        id: 3,
+        name: '主厨勋章',
+        code: 'headchef_certificate',
+        extension: 'grand_master',
+        setting: '烹饪效率 +50% / 暴击率 +25% / 解锁隐藏菜谱',
+        durability: 60,
+        theme: 'cooking',
+        themeName: '烹饪系',
+        colorIndex: 1,
+        obtain: '获得大厨勋章并完成主厨挑战',
+        description: '烹饪系的终极勋章，大幅提升烹饪效率，并且可以解锁隐藏的特殊菜谱，是每个美食家的终极追求。'
+      },
+      {
+        id: 4,
+        name: '战士勋章',
+        code: 'warrior_certificate',
+        extension: 'combat_boost',
+        setting: '攻击力 +20%',
+        durability: 100,
+        theme: 'combat',
+        themeName: '战斗系',
+        colorIndex: 3,
+        obtain: '击败10个boss级怪物',
+        description: '战斗系的基础勋章，提升20%的攻击力，让玩家在战斗中更具优势。'
+      },
+      {
+        id: 5,
+        name: '狂战士勋章',
+        code: 'berserker_certificate',
+        extension: 'rage_mode',
+        setting: '攻击力 +40% / 攻击速度 +15%',
+        durability: 70,
+        theme: 'combat',
+        themeName: '战斗系',
+        colorIndex: 3,
+        obtain: '累计造成100000点伤害',
+        description: '战斗系的进阶勋章，大幅提升攻击力和攻击速度，适合喜欢正面战斗的玩家。'
+      },
+      {
+        id: 6,
+        name: '生存者勋章',
+        code: 'survivor_certificate',
+        extension: 'survival_instinct',
+        setting: '饥饿消耗 -20% / 生命恢复 +5/s',
+        durability: 100,
+        theme: 'survival',
+        themeName: '生存系',
+        colorIndex: 2,
+        obtain: '存活超过100天',
+        description: '生存系的基础勋章，降低饥饿消耗并提升生命恢复速度，非常适合长期生存的玩家。'
+      },
+      {
+        id: 7,
+        name: '建筑师勋章',
+        code: 'builder_certificate',
+        extension: 'construction_boost',
+        setting: '建造速度 +30% / 材料消耗 -10%',
+        durability: 90,
+        theme: 'building',
+        themeName: '建造系',
+        colorIndex: 4,
+        obtain: '放置500个建筑',
+        description: '建造系勋章，提升建造速度并降低材料消耗，是基地建设爱好者的必备品。'
+      },
+      {
+        id: 8,
+        name: '法师勋章',
+        code: 'mage_certificate',
+        extension: 'magic_power',
+        setting: '魔法伤害 +25% / 法力恢复 +10/s',
+        durability: 75,
+        theme: 'magic',
+        themeName: '魔法系',
+        colorIndex: 4,
+        obtain: '使用魔法物品100次',
+        description: '魔法系勋章，提升魔法伤害和法力恢复速度，适合喜欢使用魔法道具的玩家。'
+      }
+    ];
+
+    // 更新日志数据
+    const updateLog = [
+      { version: '2.5.0', date: '2024-01-15', content: '新增主厨勋章，解锁隐藏菜谱功能' },
+      { version: '2.4.0', date: '2023-12-20', content: '优化勋章获取条件，降低部分勋章难度' },
+      { version: '2.3.0', date: '2023-11-10', content: '新增建造系和魔法系勋章' },
+      { version: '2.2.0', date: '2023-10-05', content: '修复勋章耐久度显示异常问题' },
+      { version: '2.1.0', date: '2023-09-01', content: '新增战斗系勋章，平衡调整' }
+    ];
+
+    // 常见问题数据
+    const qaData = [
+      { q: '勋章耐久度用完了怎么办？', a: '勋章耐久度耗尽后，可以使用修复工具进行修复，或者等待自然恢复（每天恢复5%）。' },
+      { q: '可以同时佩戴多个勋章吗？', a: '可以同时佩戴最多3个不同系列的勋章，相同系列的勋章效果不叠加。' },
+      { q: '如何快速获取勋章？', a: '建议先完成新手任务获取基础勋章，然后通过日常活动积累进度，逐步解锁更高级的勋章。' }
+    ];
+
+    // 作者留言
+    const authorMessage = '感谢大家使用能力勋章模组！这个模组是我用心制作的作品，希望能给大家的游戏体验带来更多乐趣。如果有任何问题或建议，欢迎在模组页面留言反馈。祝大家游戏愉快！—— 恒子';
+
+    // 模组说明
+    const modExplain = '能力勋章是一个为饥荒联机版设计的功能性模组，玩家可以通过完成特定任务来获取各种勋章。每个勋章都拥有独特的属性加成，合理搭配勋章可以让你的生存之旅更加轻松。';
+
+    // DOM元素引用
+    let gameListEl = null;
+    let analysisBoxEl = null;
+    let analysisTitleEl = null;
+    let analysisContentEl = null;
+    let searchboxEl = null;
+    let gameThemeEl = null;
+    let gameStyleEl = null;
+    let gameLevelEl = null;
+
+    // 当前状态
+    let currentTab = 'item';
+    let currentTheme = '';
+    let currentStyle = 0;
+    let isDanlie = false;
+
+    // 初始化主题选项
+    function initThemeOptions() {
+      if (!gameThemeEl) return;
+      let htmlstr = '';
+      for (let i = 0; i < themeList.length; i++) {
+        htmlstr += "<option value='" + themeList[i].theme_value + "'>" + themeList[i].theme_name + "</option>";
+      }
+      gameThemeEl.innerHTML = '<option value="">全部</option>' + htmlstr;
+    }
+
+    // 初始化颜色风格选项
+    function initStyleOptions() {
+      if (!gameStyleEl) return;
+      let htmlstr = '';
+      for (let i = 0; i < colorStyleList.length; i++) {
+        htmlstr += "<option value='" + i + "'>" + colorStyleList[i].name + "</option>";
+      }
+      gameStyleEl.innerHTML = htmlstr;
+    }
+
+    // 获取图标SVG
+    function getIconSvg(theme) {
+      const icons = {
+        cooking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/></svg>',
+        combat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>',
+        survival: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+        magic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+        building: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>'
+      };
+      return icons[theme] || icons.cooking;
+    }
+
+    // 渲染勋章卡片
+    function renderMedalCards() {
+      if (!gameListEl) return;
+      
+      let filteredData = medalData;
+      
+      // 筛选主题
+      if (currentTheme) {
+        filteredData = filteredData.filter(m => m.theme === currentTheme);
+      }
+      
+      // 筛选风格（根据颜色）
+      if (currentStyle !== null && colorStyleList[currentStyle]) {
+        // 这里可以添加风格筛选逻辑
+      }
+      
+      let htmlstr = '';
+      
+      if (filteredData.length === 0) {
+        htmlstr = '<div class="loading_box"><div class="loading">暂无数据</div></div>';
+      } else {
+        filteredData.forEach((medal, index) => {
+          const color = colorStyleList[medal.colorIndex] ? colorStyleList[medal.colorIndex].color : '#c9a227';
+          const delay = index * 0.1;
+          
+          htmlstr += `
+            <div class="game_card fade-in" style="--card-accent: ${color}; animation-delay: ${delay}s" data-id="${medal.id}">
+              <div class="card_header">
+                <div class="card_icon" style="--card-accent: ${color}">
+                  ${getIconSvg(medal.theme)}
+                </div>
+                <div class="card_title_area">
+                  <div class="card_name">${medal.name}</div>
+                  <div class="card_code">${medal.code}</div>
+                </div>
+              </div>
+              <div class="card_body">
+                <div class="card_row">
+                  <span class="card_label">扩展</span>
+                  <span class="card_value">${medal.extension}</span>
+                </div>
+                <div class="card_row">
+                  <span class="card_label">设定</span>
+                  <span class="card_value">${medal.setting}</span>
+                </div>
+                <div class="card_row">
+                  <span class="card_label">获取</span>
+                  <span class="card_value">${medal.obtain}</span>
+                </div>
+              </div>
+              <div class="card_footer">
+                <span class="card_theme">${medal.themeName}</span>
+                <div class="card_durability">
+                  <div class="durability_bar">
+                    <div class="durability_fill" style="width: ${medal.durability}%"></div>
+                  </div>
+                  <span class="durability_text">${medal.durability}%</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      
+      gameListEl.innerHTML = htmlstr;
+      
+      // 添加卡片点击事件
+      document.querySelectorAll('.game_card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = parseInt(card.dataset.id);
+          showMedalDetail(id);
+        });
+      });
+    }
+
+    // 显示勋章详情
+    function showMedalDetail(id) {
+      const medal = medalData.find(m => m.id === id);
+      if (!medal || !analysisTitleEl || !analysisContentEl || !analysisBoxEl) return;
+      
+      const color = colorStyleList[medal.colorIndex] ? colorStyleList[medal.colorIndex].color : '#c9a227';
+      
+      analysisTitleEl.textContent = medal.name;
+      analysisTitleEl.style.color = color;
+      
+      analysisContentEl.innerHTML = `
+        <div class="analysis_row">
+          <span class="analysis_label">代码</span>
+          <span class="analysis_value" style="color: ${color}">${medal.code}</span>
+        </div>
+        <div class="analysis_row">
+          <span class="analysis_label">扩展</span>
+          <span class="analysis_value">${medal.extension}</span>
+        </div>
+        <div class="analysis_row">
+          <span class="analysis_label">设定</span>
+          <span class="analysis_value">${medal.setting}</span>
+        </div>
+        <div class="analysis_row">
+          <span class="analysis_label">耐久</span>
+          <span class="analysis_value">${medal.durability}%</span>
+        </div>
+        <div class="analysis_row">
+          <span class="analysis_label">获取方式</span>
+          <span class="analysis_value">${medal.obtain}</span>
+        </div>
+        <div class="shuoming">
+          <div class="shuoming_title">详细说明</div>
+          <div class="shuoming_content">${medal.description}</div>
+        </div>
+      `;
+      
+      analysisBoxEl.classList.add('show');
+    }
+
+    // 渲染更新日志
+    function renderUpdateLog() {
+      if (!gameListEl || !analysisTitleEl || !analysisContentEl) return;
+      
+      let htmlstr = '';
+      updateLog.forEach((log, index) => {
+        const delay = index * 0.1;
+        htmlstr += `
+          <div class="game_card fade-in" style="animation-delay: ${delay}s">
+            <div class="card_body">
+              <div class="card_row">
+                <span class="card_label">版本</span>
+                <span class="card_value" style="color: var(--accent-gold)">${log.version}</span>
+              </div>
+              <div class="card_row">
+                <span class="card_label">日期</span>
+                <span class="card_value">${log.date}</span>
+              </div>
+              <div class="card_row">
+                <span class="card_label">内容</span>
+                <span class="card_value">${log.content}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      gameListEl.innerHTML = htmlstr;
+    }
+
+    // 渲染常见问题
+    function renderQA() {
+      if (!gameListEl) return;
+      
+      let htmlstr = '';
+      qaData.forEach((qa, index) => {
+        const delay = index * 0.1;
+        htmlstr += `
+          <div class="game_card fade-in" style="animation-delay: ${delay}s">
+            <div class="card_body">
+              <div style="font-weight: 600; color: var(--accent-gold); margin-bottom: 8px;">Q: ${qa.q}</div>
+              <div style="color: var(--text-secondary); font-size: 14px;">A: ${qa.a}</div>
+            </div>
+          </div>
+        `;
+      });
+      
+      gameListEl.innerHTML = htmlstr;
+    }
+
+    // 渲染作者留言
+    function renderAuthor() {
+      if (!gameListEl) return;
+      
+      gameListEl.innerHTML = `
+        <div class="loading_box">
+          <div style="max-width: 600px; text-align: center; padding: 40px;">
+            <div style="font-size: 20px; color: var(--accent-gold); margin-bottom: 20px;">作者留言</div>
+            <div style="font-size: 15px; color: var(--text-secondary); line-height: 2;">${authorMessage}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 渲染模组说明
+    function renderExplain() {
+      if (!gameListEl) return;
+      
+      gameListEl.innerHTML = `
+        <div class="loading_box">
+          <div style="max-width: 600px; text-align: center; padding: 40px;">
+            <div style="font-size: 20px; color: var(--accent-gold); margin-bottom: 20px;">模组说明</div>
+            <div style="font-size: 15px; color: var(--text-secondary); line-height: 2;">${modExplain}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 切换标签
+    function switchTab(tab) {
+      currentTab = tab;
+      
+      // 更新导航按钮状态
+      document.querySelectorAll('.navigation_button').forEach(btn => {
+        btn.classList.remove('xuanzhong');
+        if (btn.dataset.tab === tab) {
+          btn.classList.add('xuanzhong');
+        }
+      });
+      
+      // 根据标签渲染不同内容
+      switch (tab) {
+        case 'item':
+          renderMedalCards();
+          break;
+        case 'explain':
+          renderExplain();
+          break;
+        case 'qa':
+          renderQA();
+          break;
+        case 'update':
+          renderUpdateLog();
+          break;
+        case 'author':
+          renderAuthor();
+          break;
+      }
+    }
+
+    // 搜索功能
+    function handleSearch(keyword) {
+      if (currentTab !== 'item') return;
+      
+      const cards = document.querySelectorAll('.game_card');
+      const lowerKeyword = keyword.toLowerCase();
+      
+      cards.forEach(card => {
+        const name = card.querySelector('.card_name').textContent.toLowerCase();
+        const code = card.querySelector('.card_code').textContent.toLowerCase();
+        
+        if (name.includes(lowerKeyword) || code.includes(lowerKeyword)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 切换布局
+    function toggleLayout() {
+      if (!gameListEl) return;
+      isDanlie = !isDanlie;
+      if (isDanlie) {
+        gameListEl.classList.add('danlie');
+      } else {
+        gameListEl.classList.remove('danlie');
+      }
+    }
+
+    // 关闭弹窗
+    function closeAnalysis() {
+      if (analysisBoxEl) {
+        analysisBoxEl.classList.remove('show');
+      }
+    }
+
+    // 初始化事件监听
+    function initEventListeners() {
+      // 导航标签点击
+      document.querySelectorAll('.navigation_button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchTab(btn.dataset.tab);
+        });
+      });
+      
+      // 搜索框输入
+      if (searchboxEl) {
+        searchboxEl.addEventListener('input', (e) => {
+          handleSearch(e.target.value);
+        });
+      }
+      
+      // 主题筛选
+      if (gameThemeEl) {
+        gameThemeEl.addEventListener('change', (e) => {
+          currentTheme = e.target.value;
+          if (currentTab === 'item') {
+            renderMedalCards();
+          }
+        });
+      }
+      
+      // 风格筛选
+      if (gameStyleEl) {
+        gameStyleEl.addEventListener('change', (e) => {
+          currentStyle = parseInt(e.target.value);
+          if (currentTab === 'item') {
+            renderMedalCards();
+          }
+        });
+      }
+      
+      // 布局切换按钮
+      const changescreenBtn = document.getElementById('changescreen');
+      if (changescreenBtn) {
+        changescreenBtn.addEventListener('click', toggleLayout);
+      }
+      
+      // 弹窗关闭
+      if (analysisBoxEl) {
+        const analysisBg = document.getElementById('analysis_bg');
+        if (analysisBg) {
+          analysisBg.addEventListener('click', closeAnalysis);
+        }
+      }
+      
+      // 帮助按钮
+      const helpBtn = document.getElementById('helpbutton');
+      if (helpBtn) {
+        helpBtn.addEventListener('click', () => {
+          alert('这是一个能力勋章介绍页面，您可以：\n1. 点击勋章卡片查看详情\n2. 使用搜索框搜索勋章\n3. 使用筛选器按主题筛选\n4. 点击右上角按钮切换布局');
+        });
+      }
+    }
+
+    // 页面初始化
+    function init() {
+      // 获取DOM元素引用
+      gameListEl = document.getElementById('game_list');
+      analysisBoxEl = document.getElementById('analysisBox');
+      analysisTitleEl = document.getElementById('analysisTitle');
+      analysisContentEl = document.getElementById('analysisContent');
+      searchboxEl = document.getElementById('searchbox');
+      gameThemeEl = document.getElementById('game_theme');
+      gameStyleEl = document.getElementById('game_style');
+      gameLevelEl = document.getElementById('game_level');
+      
+      // 初始化选项
+      initThemeOptions();
+      initStyleOptions();
+      
+      // 初始化事件
+      initEventListeners();
+      
+      // 渲染初始内容
+      renderMedalCards();
+    }
+
+    // DOM加载完成后初始化
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
