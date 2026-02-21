@@ -176,10 +176,16 @@
       border-color: var(--accent-gold);
     }
 
+    /* 小功能按钮容器 */
+    .smallbutton_box {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
     /* 小功能按钮 */
     .smallbutton {
-      position: fixed;
-      right: 20px;
       width: 40px;
       height: 40px;
       background: var(--bg-card);
@@ -192,7 +198,6 @@
       font-size: 16px;
       cursor: pointer;
       transition: all 0.2s ease;
-      z-index: 100;
     }
 
     .smallbutton:hover {
@@ -200,22 +205,6 @@
       border-color: var(--accent-gold);
       color: var(--accent-gold);
       transform: scale(1.05);
-    }
-
-    #changescreen {
-      top: 160px;
-    }
-
-    #morebutton {
-      top: 210px;
-    }
-
-    #rewardbutton {
-      top: 260px;
-    }
-
-    #helpbutton {
-      top: 310px;
     }
 
     /* 内容列表 */
@@ -572,16 +561,10 @@
       }
 
       .smallbutton {
-        right: 10px;
         width: 36px;
         height: 36px;
         font-size: 14px;
       }
-
-      #changescreen { top: 140px; }
-      #morebutton { top: 182px; }
-      #rewardbutton { top: 224px; }
-      #helpbutton { top: 266px; }
     }
 
     /* Reduced motion */
@@ -625,14 +608,14 @@
       <label class="navigation_button" data-tab="update">更新日志</label>
       <label class="navigation_button" data-tab="author">作者留言</label>
     </div>
+    <div class="smallbutton_box">
+      <div id="changescreen" class="smallbutton" title="改变布局">
+        <span class="duolie">☷</span>
+      </div>
+      <div id="morebutton" class="smallbutton" title="更多模组">…</div>
+      <div id="rewardbutton" class="smallbutton" title="打赏作者">￥</div>
+    </div>
   </div>
-
-  <!-- 小功能按钮 -->
-  <div id="changescreen" class="smallbutton" title="改变布局">
-    <span class="duolie">☷</span>
-  </div>
-  <div id="morebutton" class="smallbutton" title="更多模组">…</div>
-  <div id="rewardbutton" class="smallbutton" title="打赏作者">￥</div>
 
   <div id="game_list">
     <div class="loading_box">
