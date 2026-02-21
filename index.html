@@ -927,14 +927,19 @@
         const delay = index * 0.05;
         htmlstr += `
           <div class="game_card fade-in" style="animation-delay: ${delay}s">
-            <div class="card_header">
-              <div class="card_title_area">
-                <div class="card_name">${log.version}</div>
-                <div class="card_code" style="color: var(--text-muted);">${log.date}</div>
-              </div>
-            </div>
             <div class="card_body">
-              <div class="changelog_content">${log.content}</div>
+              <div class="card_row">
+                <span class="card_label">版本</span>
+                <span class="card_value" style="color: var(--accent-gold)">${log.version}</span>
+              </div>
+              <div class="card_row">
+                <span class="card_label">日期</span>
+                <span class="card_value">${log.date}</span>
+              </div>
+              <div class="card_row">
+                <span class="card_label">内容</span>
+                <span class="card_value" style="max-width: 100%; text-align: left;">${log.content}</span>
+              </div>
             </div>
           </div>
         `;
