@@ -1,0 +1,14 @@
+[Unit]
+Description=More Items Introduction Page
+After=network.target
+
+[Service]
+Type=simple
+User=your-username
+WorkingDirectory=/home/your-username/web/mod_intro
+ExecStart=/usr/bin/node /usr/local/bin/http-server . -p 8000
+Restart=always
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
