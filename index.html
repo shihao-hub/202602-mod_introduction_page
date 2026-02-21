@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <meta name="description" content="饥荒联机版《能力勋章》官方介绍页，最新最全的内容都在这里~" />
-  <meta name="keywords" content="能力勋章,能力勋章介绍页,恒子,饥荒联机版能力勋章,functional medal,勋章" />
-  <title>能力勋章介绍页</title>
+  <meta name="description" content="饥荒联机版《更多物品》官方介绍页，最新最全的内容都在这里~" />
+  <meta name="keywords" content="更多物品,更多物品介绍页,饥荒联机版更多物品" />
+  <title>更多物品介绍页</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -336,6 +336,16 @@
 
     .card_body {
       padding: 16px;
+    }
+
+    .card_description {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card_row {
@@ -735,21 +745,25 @@
 
     // 更新日志数据
     const updateLog = [
-      { version: '1.0.0', date: '2023-01-01', content: '更多物品模组初始版本' }
+      { version: '2.5.0', date: '2024-01-15', content: '新增主厨勋章，解锁隐藏菜谱功能' },
+      { version: '2.4.0', date: '2023-12-20', content: '优化勋章获取条件，降低部分勋章难度' },
+      { version: '2.3.0', date: '2023-11-10', content: '新增建造系和魔法系勋章' },
+      { version: '2.2.0', date: '2023-10-05', content: '修复勋章耐久度显示异常问题' },
+      { version: '2.1.0', date: '2023-09-01', content: '新增战斗系勋章，平衡调整' }
     ];
 
     // 常见问题数据
     const qaData = [
-      { q: '如何获取这些物品？', a: '这些物品是"更多物品"模组中新增的内容，可以通过科学机器或炼金引擎解锁制作配方。' },
-      { q: '物品特性如何生效？', a: '每个物品都有独特的功能特性，具体请点击物品卡片查看详细说明。' },
-      { q: '如何筛选特定类别的物品？', a: '使用顶部的分类按钮可以按袋子类、武器类、建筑类、装备类、食物类、工具类、其他来筛选物品。' }
+      { q: '勋章耐久度用完了怎么办？', a: '勋章耐久度耗尽后，可以使用修复工具进行修复，或者等待自然恢复（每天恢复5%）。' },
+      { q: '可以同时佩戴多个勋章吗？', a: '可以同时佩戴最多3个不同系列的勋章，相同系列的勋章效果不叠加。' },
+      { q: '如何快速获取勋章？', a: '建议先完成新手任务获取基础勋章，然后通过日常活动积累进度，逐步解锁更高级的勋章。' }
     ];
 
     // 作者留言
-    const authorMessage = '欢迎使用更多物品模组介绍页！这个模组为饥荒联机版添加了大量实用的物品，包括各种容器、工具、武器和装备。希望能给大家的游戏体验带来更多乐趣。如有问题或建议，欢迎反馈。—— 作者';
+    const authorMessage = '感谢大家使用能力勋章模组！这个模组是我用心制作的作品，希望能给大家的游戏体验带来更多乐趣。如果有任何问题或建议，欢迎在模组页面留言反馈。祝大家游戏愉快！—— 恒子';
 
     // 模组说明
-    const modExplain = '"更多物品"是一个为饥荒联机版设计的功能性模组，添加了大量实用的物品和容器。每个物品都拥有独特的功能特性，合理使用这些物品可以让你的生存之旅更加轻松。';
+    const modExplain = '能力勋章是一个为饥荒联机版设计的功能性模组，玩家可以通过完成特定任务来获取各种勋章。每个勋章都拥有独特的属性加成，合理搭配勋章可以让你的生存之旅更加轻松。';
 
     // DOM元素引用
     let gameListEl = null;
@@ -801,65 +815,55 @@
       return icons[theme] || icons.other;
     }
 
-    // 渲染物品卡片
+    // 渲染勋章卡片
     function renderMedalCards() {
       if (!gameListEl) return;
-
+      
       let filteredData = medalData;
-
+      
       // 筛选主题
       if (currentTheme) {
         filteredData = filteredData.filter(m => m.theme === currentTheme);
       }
-
+      
       // 筛选风格（根据颜色）
       if (currentStyle !== null && colorStyleList[currentStyle]) {
         // 这里可以添加风格筛选逻辑
       }
-
+      
       let htmlstr = '';
-
+      
       if (filteredData.length === 0) {
         htmlstr = '<div class="loading_box"><div class="loading">暂无数据</div></div>';
       } else {
-        filteredData.forEach((item, index) => {
-          const color = colorStyleList[item.colorIndex] ? colorStyleList[item.colorIndex].color : '#c9a227';
+        filteredData.forEach((medal, index) => {
+          const color = colorStyleList[medal.colorIndex] ? colorStyleList[medal.colorIndex].color : '#c9a227';
           const delay = index * 0.05;
-          const shortDesc = item.description.length > 40 ? item.description.substring(0, 40) + '...' : item.description;
 
           htmlstr += `
-            <div class="game_card fade-in" style="--card-accent: ${color}; animation-delay: ${delay}s" data-id="${item.id}">
+            <div class="game_card fade-in" style="--card-accent: ${color}; animation-delay: ${delay}s" data-id="${medal.id}">
               <div class="card_header">
                 <div class="card_icon" style="--card-accent: ${color}">
-                  ${getIconSvg(item.theme)}
+                  ${getIconSvg(medal.theme)}
                 </div>
                 <div class="card_title_area">
-                  <div class="card_name">${item.name}</div>
-                  <div class="card_code">${item.code}</div>
+                  <div class="card_name">${medal.name}</div>
+                  <div class="card_code">${medal.code}</div>
                 </div>
               </div>
               <div class="card_body">
-                <div class="card_row">
-                  <span class="card_label">描述</span>
-                  <span class="card_value">${shortDesc}</span>
-                </div>
-                ${item.features && item.features.length > 0 ? `
-                <div class="card_row">
-                  <span class="card_label">特性</span>
-                  <span class="card_value">${item.features.slice(0, 2).join('、')}</span>
-                </div>
-                ` : ''}
+                <div class="card_description">${medal.description}</div>
               </div>
               <div class="card_footer">
-                <span class="card_theme">${item.themeName}</span>
+                <span class="card_theme">${medal.themeName}</span>
               </div>
             </div>
           `;
         });
       }
-
+      
       gameListEl.innerHTML = htmlstr;
-
+      
       // 添加卡片点击事件
       document.querySelectorAll('.game_card').forEach(card => {
         card.addEventListener('click', () => {
@@ -888,10 +892,6 @@
         <div class="analysis_row">
           <span class="analysis_label">代码</span>
           <span class="analysis_value" style="color: ${color}">${item.code}</span>
-        </div>
-        <div class="analysis_row">
-          <span class="analysis_label">分类</span>
-          <span class="analysis_value">${item.themeName}</span>
         </div>
         ${featuresHtml ? `
         <div class="shuoming">
