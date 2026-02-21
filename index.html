@@ -644,11 +644,13 @@
   <script>
     // 主题分类数据
     const themeList = [
-      { theme_value: 'cooking', theme_name: '烹饪系' },
-      { theme_value: 'combat', theme_name: '战斗系' },
-      { theme_value: 'survival', theme_name: '生存系' },
-      { theme_value: 'magic', theme_name: '魔法系' },
-      { theme_value: 'building', theme_name: '建造系' }
+      { theme_value: 'bag', theme_name: '袋子类' },
+      { theme_value: 'weapon', theme_name: '武器类' },
+      { theme_value: 'building', theme_name: '建筑类' },
+      { theme_value: 'equipment', theme_name: '装备类' },
+      { theme_value: 'food', theme_name: '食物类' },
+      { theme_value: 'tool', theme_name: '工具类' },
+      { theme_value: 'other', theme_name: '其他' }
     ];
 
     // 颜色风格数据
@@ -660,7 +662,7 @@
       { name: '神秘紫', color: '#7c4a9c' }
     ];
 
-    // 勋章数据
+    // 物品数据（从 Lua 文件中提取）
     const medalData = [
       {
         id: 1,
