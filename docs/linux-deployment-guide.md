@@ -77,6 +77,94 @@ ufw allow 'Nginx Full'
 http://124.223.114.33
 ```
 
+### 实际部署记录
+
+**日期**: 2026-02-22
+**操作人**: ubuntu
+**服务器**: Ubuntu 20.04.6 LTS
+
+#### 本地操作
+
+```powershell
+# 使用 scp 上传项目到服务器
+PS D:\Users\29580\ProgrammerAdvancedProjects\mod_introduction_page> scp -r . ubuntu@124.223.114.33:~/mod_introduction_page
+```
+
+上传成功传输了以下文件：
+- 项目文件：`index.html`, `README.md`
+- 数据文件：`data/config.json`, `data/items.json`, `data/qa.json`, `data/updates.json`
+- 部署脚本：`deploy.sh`, `deploy-nginx.conf`, `deploy-systemd.service`
+- Git 相关文件：`.git/`, `.gitignore`
+
+#### 服务器操作
+
+```bash
+# SSH 连接服务器
+ssh ubuntu@124.223.114.33
+
+# 进入项目目录
+cd ~/mod_introduction_page
+
+# 运行部署脚本（使用 sudo）
+sudo bash deploy.sh
+```
+
+#### 部署脚本执行流程
+
+1. **部署路径选择**：使用默认路径 `/var/www/html/mod_intro`
+2. **部署方式选择**：选择 `1) Nginx (推荐)`
+3. **自动安装 Nginx**：
+   - 更新软件包列表
+   - 安装 nginx 及相关依赖：
+     - libgd3
+     - libnginx-mod-http-image-filter
+     - libnginx-mod-http-xslt-filter
+     - libnginx-mod-mail
+     - libnginx-mod-stream
+     - nginx-common
+     - nginx-core
+4. **配置 Nginx**：
+   - 创建站点配置文件
+   - 启用站点配置
+   - 移除默认站点
+   - 测试配置文件（语法检查通过）
+   - 重启并启用 Nginx 服务
+5. **配置防火墙**：
+   - 允许 Nginx Full 规则
+
+#### 部署结果
+
+```
+✓ Nginx 部署完成！
+访问地址: http://10.0.12.4
+
+======================================
+  部署完成！
+======================================
+部署路径: /var/www/html/mod_intro
+管理命令:
+  Nginx: sudo systemctl {start|stop|restart|status} nginx
+  Python: sudo supervisorctl {start|stop|restart|status} mod_intro
+  Node.js: sudo systemctl {start|stop|restart|status} mod_intro
+```
+
+#### 服务器状态信息
+
+部署时的服务器状态：
+- 系统负载: 0.01
+- 进程数: 177
+- 磁盘使用: 29.9% of 39.27GB
+- 内存使用: 50%
+- 交换分区使用: 0%
+- 内网 IP: 10.0.12.4
+
+#### 注意事项
+
+1. 服务器使用腾讯云镜像源 `mirrors.tencentyun.com`
+2. Ubuntu 20.04 LTS 已于 2025年5月31日结束标准支持
+3. 系统提示可升级至 Ubuntu 22.04.5 LTS
+4. 部署成功后可通过内网 IP (10.0.12.4) 或公网 IP (124.223.114.33) 访问
+
 ## 部署方式二：手动 Nginx 部署（未测试）
 
 如果需要更细粒度的控制，可以手动部署。
