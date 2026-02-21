@@ -301,3 +301,309 @@ sudo nginx -t
 # 查看错误日志
 sudo tail -f /var/log/nginx/error.log
 ```
+
+---
+
+# Git 部署指南（推荐）
+
+相比 scp 手动上传，使用 Git 进行部署更加高效和可控。
+
+## 为什么选择 Git 部署
+
+| 对比项 | SCP 部署 | Git 部署 |
+|--------|----------|----------|
+| 更新方式 | 手动上传全部文件 | 只传输变更内容 |
+| 版本管理 | 无 | 完整的提交历史 |
+| 回滚能力 | 困难 | 简单（git reset） |
+| 协作支持 | 无 | 支持多人协作 |
+| 部署速度 | 慢（上传全部文件） | 快（只传输差异） |
+
+## 初次设置：从 SCP 迁移到 Git
+
+### 前置条件
+
+- 项目代码已推送到 Git 仓库（GitHub/GitLab/Gitee 等）
+- 服务器可以访问 Git 仓库
+
+### 步骤一：清理旧部署（可选）
+
+如果你想完全替换现有的部署：
+
+```bash
+# SSH 登录服务器
+ssh ubuntu@124.223.114.33
+
+# 备份现有部署（可选）
+sudo cp -r /var/www/html/mod_intro /var/www/html/mod_intro.backup
+
+# 删除旧部署
+sudo rm -rf /var/www/html/mod_intro
+```
+
+### 步骤二：安装 Git
+
+```bash
+# 在服务器上安装 git
+sudo apt update
+sudo apt install -y git
+
+# 配置 git 用户信息（可选）
+git config --global user.name "Your Name"
+git config --global user.email "your-email@example.com"
+```
+
+### 步骤三：克隆项目
+
+```bash
+# 进入部署目录
+cd /var/www/html
+
+# 克隆项目（替换为你的实际仓库地址）
+sudo git clone https://github.com/你的用户名/mod_introduction_page.git mod_intro
+
+# 如果使用 SSH 密钥（推荐）
+# sudo git clone git@github.com:你的用户名/mod_introduction_page.git mod_intro
+```
+
+**注意**：
+- HTTPS 方式：每次 pull 可能需要输入密码
+- SSH 方式：需配置 SSH 密钥，免密登录
+
+### 步骤四：设置 SSH 密钥（推荐）
+
+避免每次 pull 都输入密码：
+
+```bash
+# 1. 生成 SSH 密钥（如果没有）
+ssh-keygen -t ed25519 -C "your-email@example.com"
+# 一路回车使用默认设置
+
+# 2. 查看公钥
+cat ~/.ssh/id_ed25519.pub
+
+# 3. 将公钥添加到 GitHub/GitLab：
+#    GitHub: Settings → SSH and GPG keys → New SSH key
+#    粘贴刚才的公钥内容
+
+# 4. 测试连接
+ssh -T git@github.com
+# 成功会显示：Hi username! You've successfully authenticated...
+```
+
+### 步骤五：设置权限
+
+```bash
+# 设置文件所有者
+sudo chown -R www-data:www-data /var/www/html/mod_intro
+
+# 设置文件权限
+sudo chmod -R 755 /var/www/html/mod_intro
+
+# 授予 ubuntu 用户 git pull 权限（无需 sudo）
+sudo chown -R ubuntu:www-data /var/www/html/mod_intro
+sudo chmod -R 775 /var/www/html/mod_intro
+```
+
+### 步骤六：创建一键更新脚本
+
+```bash
+# 创建更新脚本
+sudo nano /usr/local/bin/update-mod-intro.sh
+```
+
+粘贴以下内容：
+
+```bash
+#!/bin/bash
+
+# 颜色定义
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}开始更新...${NC}"
+cd /var/www/html/mod_intro || exit 1
+
+# 拉取最新代码
+echo -e "${YELLOW}拉取最新代码...${NC}"
+git pull origin master
+
+# 检查是否成功
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ 更新完成！${NC}"
+    echo -e "${GREEN}最新提交: $(git log -1 --pretty=format:'%h - %s')${NC}"
+else
+    echo -e "${RED}✗ 更新失败！${NC}"
+    exit 1
+fi
+```
+
+```bash
+# 设置脚本权限
+sudo chmod +x /usr/local/bin/update-mod-intro.sh
+
+# 测试脚本
+update-mod-intro.sh
+```
+
+## 日常更新流程
+
+### 本地修改代码
+
+```bash
+# 1. 修改代码后提交
+git add .
+git commit -m "feat: 添加新功能"
+
+# 2. 推送到远程仓库
+git push
+```
+
+### 服务器更新
+
+```bash
+# 方式一：使用一键脚本（推荐）
+update-mod-intro.sh
+
+# 方式二：手动更新
+ssh ubuntu@124.223.114.33
+cd /var/www/html/mod_intro
+git pull
+```
+
+### 查看更新状态
+
+```bash
+# 查看当前分支和提交
+cd /var/www/html/mod_intro
+git status
+git log -1 --oneline
+
+# 查看远程更新
+git log origin/master -1 --oneline
+```
+
+## 高级操作
+
+### 版本回滚
+
+如果新版本有问题，可以快速回滚：
+
+```bash
+# 查看提交历史
+git log --oneline -10
+
+# 回滚到指定版本
+git reset --hard <commit-hash>
+
+# 强制推送（谨慎使用）
+git push -f origin master
+
+# 服务器上拉取回滚后的版本
+git pull
+```
+
+### 切换分支
+
+```bash
+# 查看所有分支
+git branch -a
+
+# 切换到其他分支
+git checkout develop
+
+# 服务器切换分支
+cd /var/www/html/mod_intro
+git checkout develop
+```
+
+### 查看文件变更
+
+```bash
+# 查看本地修改
+git diff
+
+# 查看已暂存的修改
+git diff --staged
+
+# 查看文件修改历史
+git log --follow -p filename
+```
+
+## 常见问题
+
+### git pull 提示权限错误
+
+```bash
+# 问题：error: cannot open .git/FETCH_HEAD: Permission denied
+
+# 解决：修复 .git 目录权限
+sudo chown -R ubuntu:www-data /var/www/html/mod_intro/.git
+sudo chmod -R 775 /var/www/html/mod_intro/.git
+```
+
+### git pull 提示冲突
+
+```bash
+# 如果服务器上有本地修改（不推荐），会提示冲突
+
+# 解决方案一：放弃本地修改（推荐）
+git reset --hard origin/master
+
+# 解决方案二：暂存本地修改
+git stash
+git pull
+git stash pop
+```
+
+### HTTPS 方式需要密码
+
+```bash
+# 使用 SSH 方式替代，修改远程仓库地址
+cd /var/www/html/mod_intro
+git remote set-url origin git@github.com:你的用户名/mod_introduction_page.git
+```
+
+### 服务器无法访问 GitHub
+
+```bash
+# 如果网络受限，可以使用 Gitee（国内镜像）
+
+# 1. 在 Gitee 导入 GitHub 仓库
+# 2. 修改远程仓库地址
+git remote set-url origin https://gitee.com/你的用户名/mod_introduction_page.git
+```
+
+## 部署脚本对比
+
+| 操作 | SCP 方式 | Git 方式 |
+|------|----------|----------|
+| 初次部署 | `scp + deploy.sh` | `git clone` |
+| 更新代码 | `scp -r . server:/path` | `git pull` |
+| 回滚版本 | 手动恢复备份 | `git reset --hard` |
+| 查看历史 | 无 | `git log` |
+| 切换分支 | 不支持 | `git checkout` |
+
+## 最佳实践
+
+1. **使用 SSH 密钥**：避免每次输入密码
+2. **保护敏感信息**：不要将 `.env` 等文件提交到仓库
+3. **使用 .gitignore**：排除不需要部署的文件
+4. **定期备份**：虽然 Git 有历史，但重要数据仍需备份
+5. **测试后再推送**：本地验证通过后再推送到服务器
+
+## 总结
+
+Git 部署的核心优势：
+
+- **快速**：只传输变更的文件
+- **安全**：有完整的版本历史，出错可回滚
+- **简单**：一条命令完成更新
+- **灵活**：支持多分支、多环境部署
+
+推荐工作流程：
+
+```
+本地开发 → git commit → git push → 服务器 git pull
+```
