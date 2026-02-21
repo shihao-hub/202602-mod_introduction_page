@@ -67,6 +67,24 @@ http-server -p 8000
 
 然后在浏览器中访问 `http://localhost:8000`
 
+### 服务器部署
+
+详细的 Linux 服务器部署指南请参考 [docs/linux-deployment-guide.md](docs/linux-deployment-guide.md)
+
+快速部署（推荐）：
+
+```bash
+# 上传项目到服务器
+scp -r . ubuntu@your-server-ip:~/mod_introduction_page
+
+# SSH 登录并运行部署脚本
+ssh ubuntu@your-server-ip
+cd ~/mod_introduction_page
+sudo bash deploy.sh
+```
+
+部署脚本支持三种方式：Nginx（推荐）、Python HTTP Server、Node.js http-server。
+
 ### 直接打开
 
 直接双击 `index.html` 文件也可以打开，但部分浏览器可能会因 CORS 限制无法加载数据。
