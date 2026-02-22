@@ -432,9 +432,10 @@ NC='\033[0m' # No Color
 echo -e "${YELLOW}开始更新...${NC}"
 cd /var/www/html/mod_intro || exit 1
 
-# 拉取最新代码
+# 拉取最新代码（强制覆盖本地修改）
 echo -e "${YELLOW}拉取最新代码...${NC}"
-git pull origin master
+git fetch origin
+git reset --hard origin/master
 
 # 检查是否成功
 if [ $? -eq 0 ]; then
