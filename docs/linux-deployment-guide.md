@@ -432,7 +432,26 @@ NC='\033[0m' # No Color
 echo -e "${YELLOW}开始更新...${NC}"
 cd /var/www/html/mod_intro || exit 1
 
-# 拉取最新代码（强制覆盖本地修改）
+# 检查是否有本地修改（包括未跟踪文件）
+if [ -n "$(git status --porcelain)" ]; then
+    echo -e "${RED}警告：检测到有未提交的本地修改！${NC}"
+    echo -e "${YELLOW}继续更新将丢失这些修改。${NC}"
+    echo ""
+    echo "当前修改内容："
+    git status --short
+    echo ""
+    echo "如需保留修改，请先执行："
+    echo "  git add ."
+    echo "  git commit -m \"你的提交信息\""
+    echo "  git push origin master"
+    echo ""
+    echo "如需暂存修改，请执行："
+    echo "  git stash"
+    echo ""
+    exit 1
+fi
+
+# 拉取最新代码
 echo -e "${YELLOW}拉取最新代码...${NC}"
 git fetch origin
 git reset --hard origin/master
