@@ -358,12 +358,19 @@ git config --global user.email "your-email@example.com"
 # 进入部署目录
 cd /var/www/html
 
-# 克隆项目（替换为你的实际仓库地址）
-sudo git clone https://github.com/你的用户名/mod_introduction_page.git mod_intro
+# 克隆项目
+# 语法：git clone <仓库地址> <本地目录名>
+# 本地目录名可以自定义，与远程仓库名无关
+sudo git clone https://github.com/你的用户名/202602-mod_introduction_page.git mod_intro
 
 # 如果使用 SSH 密钥（推荐）
-# sudo git clone git@github.com:你的用户名/mod_introduction_page.git mod_intro
+# sudo git clone git@github.com:你的用户名/202602-mod_introduction_page.git mod_intro
 ```
+
+**说明**：
+- 最后的 `mod_intro` 是本地目录名，可以自定义
+- 即使远程仓库名是 `202602-mod_introduction_page`，本地目录名仍可以是 `mod_intro`
+- 这样部署路径保持为 `/var/www/html/mod_intro`，与文档后续命令一致
 
 **注意**：
 - HTTPS 方式：每次 pull 可能需要输入密码
