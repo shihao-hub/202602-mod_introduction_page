@@ -451,6 +451,11 @@ fi
 - `Ctrl + O` 写入文件，按 Enter 确认
 - `Ctrl + X` 退出编辑器
 
+**清空文件快捷方式**：
+```bash
+sudo truncate -s 0 /usr/local/bin/update-mod-intro.sh
+```
+
 ```bash
 # 设置脚本权限
 sudo chmod +x /usr/local/bin/update-mod-intro.sh
