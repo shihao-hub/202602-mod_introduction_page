@@ -447,6 +447,10 @@ else
 fi
 ```
 
+**nano 保存退出快捷键**：
+- `Ctrl + O` 写入文件，按 Enter 确认
+- `Ctrl + X` 退出编辑器
+
 ```bash
 # 设置脚本权限
 sudo chmod +x /usr/local/bin/update-mod-intro.sh
